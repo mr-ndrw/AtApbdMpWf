@@ -30,22 +30,25 @@ namespace AtApbdMpWf.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.CinemaTabControl = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.tabControl1.SuspendLayout();
+			this.EmployeesTabPage = new System.Windows.Forms.TabPage();
+			this.RegionManagementTabPage = new System.Windows.Forms.TabPage();
+			this.CinemaTabControl.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tabControl1
+			// CinemaTabControl
 			// 
-			this.tabControl1.Controls.Add(this.tabPage1);
-			this.tabControl1.Controls.Add(this.tabPage2);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(0, 0);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(1084, 810);
-			this.tabControl1.TabIndex = 0;
+			this.CinemaTabControl.Controls.Add(this.tabPage1);
+			this.CinemaTabControl.Controls.Add(this.EmployeesTabPage);
+			this.CinemaTabControl.Controls.Add(this.RegionManagementTabPage);
+			this.CinemaTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.CinemaTabControl.Location = new System.Drawing.Point(0, 0);
+			this.CinemaTabControl.Name = "CinemaTabControl";
+			this.CinemaTabControl.SelectedIndex = 0;
+			this.CinemaTabControl.Size = new System.Drawing.Size(1084, 961);
+			this.CinemaTabControl.TabIndex = 0;
+			this.CinemaTabControl.SelectedIndexChanged += new System.EventHandler(this.CinemaTabControl_SelectedIndexChanged);
 			// 
 			// tabPage1
 			// 
@@ -53,31 +56,47 @@ namespace AtApbdMpWf.Forms
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(1076, 784);
+			this.tabPage1.Size = new System.Drawing.Size(1076, 935);
 			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "Cinema [Ctrl-1]";
+			this.tabPage1.Text = "Mange Cinema [Ctrl-1]";
 			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
-			// tabPage2
+			// EmployeesTabPage
 			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(1076, 784);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Employees [Ctrl-2]";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			this.EmployeesTabPage.Location = new System.Drawing.Point(4, 22);
+			this.EmployeesTabPage.Name = "EmployeesTabPage";
+			this.EmployeesTabPage.Padding = new System.Windows.Forms.Padding(3);
+			this.EmployeesTabPage.Size = new System.Drawing.Size(1076, 935);
+			this.EmployeesTabPage.TabIndex = 1;
+			this.EmployeesTabPage.Text = "Manage Employees [Ctrl-2]";
+			this.EmployeesTabPage.UseVisualStyleBackColor = true;
+			this.EmployeesTabPage.Click += new System.EventHandler(this.tabPage2_Click);
+			// 
+			// RegionManagementTabPage
+			// 
+			this.RegionManagementTabPage.Location = new System.Drawing.Point(4, 22);
+			this.RegionManagementTabPage.Name = "RegionManagementTabPage";
+			this.RegionManagementTabPage.Padding = new System.Windows.Forms.Padding(3);
+			this.RegionManagementTabPage.Size = new System.Drawing.Size(1076, 935);
+			this.RegionManagementTabPage.TabIndex = 2;
+			this.RegionManagementTabPage.Text = "Cinema & Region Management [Ctrl-3]";
+			this.RegionManagementTabPage.UseVisualStyleBackColor = true;
+			this.RegionManagementTabPage.Click += new System.EventHandler(this.RegionManagementTabPage_Click);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1084, 810);
-			this.Controls.Add(this.tabControl1);
+			this.ClientSize = new System.Drawing.Size(1084, 961);
+			this.Controls.Add(this.CinemaTabControl);
+			this.KeyPreview = true;
+			this.MinimumSize = new System.Drawing.Size(1000, 800);
 			this.Name = "MainForm";
 			this.Text = "Cinema Manager";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.tabControl1.ResumeLayout(false);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+			this.CinemaTabControl.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -100,9 +119,10 @@ namespace AtApbdMpWf.Forms
 		#endregion
 
 
-		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabControl CinemaTabControl;
 		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage EmployeesTabPage;
+		private TabPage RegionManagementTabPage;
 
 	}
 }

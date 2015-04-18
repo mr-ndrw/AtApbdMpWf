@@ -20,7 +20,7 @@ namespace AtApbdMpWf.Forms
 			InitializeFormData();
 		}
 
-		private void InitializeFormData()
+		public void InitializeFormData()
 		{
 			PopulateComboBoxCinemas();
 			_currentlyViewedCinema = (Cinema) ComboBoxCinemas.SelectedItem;
@@ -45,6 +45,8 @@ namespace AtApbdMpWf.Forms
 			//	Populate employees data grid view
 			EmployeesDgv.DataSource = PopulateEmployeesDgv();
 
+			
+
 			//	Bolden the dates in month calendar
 			ProjectionCalendar.BoldedDates = _cinemaService.GetAllProjections(_currentlyViewedCinema)
 				.Select(projection => projection.DateTime).ToArray();
@@ -61,7 +63,7 @@ namespace AtApbdMpWf.Forms
 			dataTable.Columns.Add("Date and Time");
 			dataTable.Columns.Add("Length");
 
-			var futureProjections = projections.Where(projection => projection.DateTime.CompareTo(new DateTime()) < 0);
+			var futureProjections = projections.Where(projection => projection.DateTime.CompareTo(DateTime.Now) > 0);
 
 			foreach (var futureProjection in futureProjections)
 			{
@@ -125,9 +127,9 @@ namespace AtApbdMpWf.Forms
 		private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
 		{
 			ProjectionsDataGridView.DataSource = PopulateProjectionDGVWithFutureProjections(ProjectionCalendar.SelectionStart);
-
+			ProjectionsDataGridView.Columns[0].Visible = false;
 			var date = ProjectionCalendar.SelectionStart.Date;
-			ShowingProjectionsLabel.Text = string.Format("{0}/{1}/{2}", date.Day, date.Month, date.Year);
+			ShowingProjectionsLabel.Text = string.Format("Showing projections for {0}/{1}/{2}", date.Day, date.Month, date.Year);
 
 		}
 
@@ -139,8 +141,14 @@ namespace AtApbdMpWf.Forms
 
 		private void ButtonShowFuturePredictions_Click(object sender, EventArgs e)
 		{
+			ShowFutureProjections();
+		}
+
+		private void ShowFutureProjections()
+		{
 			ProjectionsDataGridView.DataSource = PopulateProjectionDGVWithFutureProjections();
-			ShowingProjectionsLabel.Text = "Future Projections";
+			ProjectionsDataGridView.Columns[0].Visible = false;
+			ShowingProjectionsLabel.Text = "Showing Future Projections";
 		}
 
 		private void ShowingProjectionsLabel_Click(object sender, EventArgs e)
@@ -150,11 +158,21 @@ namespace AtApbdMpWf.Forms
 
 		private void ButtonAddProjection_Click(object sender, EventArgs e)
 		{
+			ShowAddProjectionForm();
+		}
+
+		private void ShowAddProjectionForm()
+		{
 			var addProjectionForm = new AddProjectionForm(_cinemaService, _currentlyViewedCinema, this);
 			addProjectionForm.Show();
 		}
 
 		private void ButtonDeleteProjection_Click(object sender, EventArgs e)
+		{
+			DeleteProjection();
+		}
+
+		private void DeleteProjection()
 		{
 			if (ProjectionsDataGridView.SelectedRows.Count == 0)
 			{
@@ -176,6 +194,11 @@ namespace AtApbdMpWf.Forms
 
 		private void ButtonUpdateProjection_Click(object sender, EventArgs e)
 		{
+			ShowUpdateProjection();
+		}
+
+		private void ShowUpdateProjection()
+		{
 			if (ProjectionsDataGridView.SelectedRows.Count == 0)
 			{
 				// Do nothing.
@@ -195,10 +218,88 @@ namespace AtApbdMpWf.Forms
 
 		private void LinkLabelChangeManager_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
+			ShowChangeManagerForm();
+		}
+
+		private void ShowChangeManagerForm()
+		{
 			var updateManagerSubform = new ChangeManagerForm(this, _cinemaService, _cinemaService.GetManager(_currentlyViewedCinema), _currentlyViewedCinema);
 			updateManagerSubform.Show();
 		}
 
+		private void CinemaForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.Control)
+				ProcessControlKeyPressed(e);
+			else if(e.Alt)
+ 				ProcessAltKeyPressed(e);
+			else 
+				ProcessBareKeyPressed(e);
 
+		}
+
+		private void ProcessControlKeyPressed(KeyEventArgs e)
+		{
+		
+		}
+
+		private void ProcessAltKeyPressed(KeyEventArgs e)
+		{
+			
+		}
+
+		private void ProcessBareKeyPressed(KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.M:
+				{
+					ShowChangeManagerForm();
+					break;
+				}
+				case Keys.D:
+				{
+					DeleteProjection();
+					break;
+				}
+				case Keys.A:
+				{
+					ShowAddProjectionForm();
+					break;
+				}
+				case Keys.Z:
+				{
+					ShowUpdateProjection();
+					break;
+				}
+				case Keys.F:
+				{
+					ShowFutureProjections();
+					break;
+				}
+				case Keys.F5:
+				{
+					InitializeFormData();
+					break;
+				}
+			}
+		}
+
+		private void CinemaForm_Load(object sender, EventArgs e)
+		{
+
+		}
+
+		private void RefreshButton_Click(object sender, EventArgs e)
+		{
+			InitializeFormData();
+		}
+
+		private void CinemaForm_Enter(object sender, EventArgs e)
+		{
+			InitializeFormData();
+		}
 	}
+
 }
+

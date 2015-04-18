@@ -28,8 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			this.label1 = new System.Windows.Forms.Label();
 			this.CinemaSplitContainer = new System.Windows.Forms.SplitContainer();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.panel7 = new System.Windows.Forms.Panel();
@@ -49,7 +47,6 @@
 			this.ButtonShowFuturePredictions = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.panel10 = new System.Windows.Forms.Panel();
-			this.panel12 = new System.Windows.Forms.Panel();
 			this.panel11 = new System.Windows.Forms.Panel();
 			this.EmployeesDgv = new System.Windows.Forms.DataGridView();
 			this.panel9 = new System.Windows.Forms.Panel();
@@ -63,8 +60,10 @@
 			this.label7 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.ComboBoxCinemas = new System.Windows.Forms.ComboBox();
 			this.LabelCinemaName = new System.Windows.Forms.Label();
+			this.RefreshButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.CinemaSplitContainer)).BeginInit();
 			this.CinemaSplitContainer.Panel1.SuspendLayout();
 			this.CinemaSplitContainer.Panel2.SuspendLayout();
@@ -84,17 +83,6 @@
 			this.panel9.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label1.Location = new System.Drawing.Point(0, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(315, 45);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "MANAGE CINEMAS";
 			// 
 			// CinemaSplitContainer
 			// 
@@ -144,7 +132,7 @@
 			this.ProjectionCalendar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ProjectionCalendar.Location = new System.Drawing.Point(0, 0);
 			this.ProjectionCalendar.Name = "ProjectionCalendar";
-			this.ProjectionCalendar.TabIndex = 6;
+			this.ProjectionCalendar.TabIndex = 1;
 			this.ProjectionCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
 			// 
 			// panel6
@@ -200,7 +188,7 @@
 			this.ProjectionsDataGridView.ReadOnly = true;
 			this.ProjectionsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.ProjectionsDataGridView.Size = new System.Drawing.Size(513, 257);
-			this.ProjectionsDataGridView.TabIndex = 7;
+			this.ProjectionsDataGridView.TabIndex = 3;
 			// 
 			// panel5
 			// 
@@ -228,8 +216,8 @@
 			this.ButtonAddProjection.Location = new System.Drawing.Point(0, 0);
 			this.ButtonAddProjection.Name = "ButtonAddProjection";
 			this.ButtonAddProjection.Size = new System.Drawing.Size(215, 47);
-			this.ButtonAddProjection.TabIndex = 9;
-			this.ButtonAddProjection.Text = "Add Projection";
+			this.ButtonAddProjection.TabIndex = 5;
+			this.ButtonAddProjection.Text = "Add Projection [A]";
 			this.ButtonAddProjection.UseVisualStyleBackColor = true;
 			this.ButtonAddProjection.Click += new System.EventHandler(this.ButtonAddProjection_Click);
 			// 
@@ -239,8 +227,8 @@
 			this.ButtonUpdateProjection.Location = new System.Drawing.Point(380, 0);
 			this.ButtonUpdateProjection.Name = "ButtonUpdateProjection";
 			this.ButtonUpdateProjection.Size = new System.Drawing.Size(133, 47);
-			this.ButtonUpdateProjection.TabIndex = 8;
-			this.ButtonUpdateProjection.Text = "Update Projection";
+			this.ButtonUpdateProjection.TabIndex = 6;
+			this.ButtonUpdateProjection.Text = "Update Projection [Z]";
 			this.ButtonUpdateProjection.UseVisualStyleBackColor = true;
 			this.ButtonUpdateProjection.Click += new System.EventHandler(this.ButtonUpdateProjection_Click);
 			// 
@@ -251,8 +239,8 @@
 			this.ButtonDeleteProjection.Location = new System.Drawing.Point(0, 0);
 			this.ButtonDeleteProjection.Name = "ButtonDeleteProjection";
 			this.ButtonDeleteProjection.Size = new System.Drawing.Size(165, 47);
-			this.ButtonDeleteProjection.TabIndex = 10;
-			this.ButtonDeleteProjection.Text = "Delete Projection";
+			this.ButtonDeleteProjection.TabIndex = 4;
+			this.ButtonDeleteProjection.Text = "Delete Projection [D]";
 			this.ButtonDeleteProjection.UseVisualStyleBackColor = false;
 			this.ButtonDeleteProjection.Click += new System.EventHandler(this.ButtonDeleteProjection_Click);
 			// 
@@ -269,12 +257,12 @@
 			// ShowingProjectionsLabel
 			// 
 			this.ShowingProjectionsLabel.AutoSize = true;
-			this.ShowingProjectionsLabel.Dock = System.Windows.Forms.DockStyle.Right;
-			this.ShowingProjectionsLabel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.ShowingProjectionsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ShowingProjectionsLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.ShowingProjectionsLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.ShowingProjectionsLabel.Location = new System.Drawing.Point(513, 0);
+			this.ShowingProjectionsLabel.Location = new System.Drawing.Point(165, 0);
 			this.ShowingProjectionsLabel.Name = "ShowingProjectionsLabel";
-			this.ShowingProjectionsLabel.Size = new System.Drawing.Size(0, 32);
+			this.ShowingProjectionsLabel.Size = new System.Drawing.Size(0, 30);
 			this.ShowingProjectionsLabel.TabIndex = 8;
 			this.ShowingProjectionsLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.ShowingProjectionsLabel.Click += new System.EventHandler(this.ShowingProjectionsLabel_Click);
@@ -285,8 +273,8 @@
 			this.ButtonShowFuturePredictions.Location = new System.Drawing.Point(0, 0);
 			this.ButtonShowFuturePredictions.Name = "ButtonShowFuturePredictions";
 			this.ButtonShowFuturePredictions.Size = new System.Drawing.Size(165, 41);
-			this.ButtonShowFuturePredictions.TabIndex = 7;
-			this.ButtonShowFuturePredictions.Text = "Show Future Projections";
+			this.ButtonShowFuturePredictions.TabIndex = 2;
+			this.ButtonShowFuturePredictions.Text = "Show Future Projections [F]";
 			this.ButtonShowFuturePredictions.UseVisualStyleBackColor = true;
 			this.ButtonShowFuturePredictions.Click += new System.EventHandler(this.ButtonShowFuturePredictions_Click);
 			// 
@@ -299,28 +287,19 @@
 			this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.groupBox3.Location = new System.Drawing.Point(0, 0);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(539, 680);
+			this.groupBox3.Size = new System.Drawing.Size(539, 686);
 			this.groupBox3.TabIndex = 15;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Employees";
 			// 
 			// panel10
 			// 
-			this.panel10.Controls.Add(this.panel12);
 			this.panel10.Controls.Add(this.panel11);
 			this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel10.Location = new System.Drawing.Point(3, 126);
+			this.panel10.Location = new System.Drawing.Point(3, 99);
 			this.panel10.Name = "panel10";
-			this.panel10.Size = new System.Drawing.Size(533, 551);
+			this.panel10.Size = new System.Drawing.Size(533, 584);
 			this.panel10.TabIndex = 2;
-			// 
-			// panel12
-			// 
-			this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel12.Location = new System.Drawing.Point(0, 510);
-			this.panel12.Name = "panel12";
-			this.panel12.Size = new System.Drawing.Size(533, 41);
-			this.panel12.TabIndex = 1;
 			// 
 			// panel11
 			// 
@@ -328,26 +307,18 @@
 			this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel11.Location = new System.Drawing.Point(0, 0);
 			this.panel11.Name = "panel11";
-			this.panel11.Size = new System.Drawing.Size(533, 551);
+			this.panel11.Size = new System.Drawing.Size(533, 584);
 			this.panel11.TabIndex = 0;
 			// 
 			// EmployeesDgv
 			// 
 			this.EmployeesDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.EmployeesDgv.DefaultCellStyle = dataGridViewCellStyle1;
 			this.EmployeesDgv.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.EmployeesDgv.GridColor = System.Drawing.SystemColors.Control;
 			this.EmployeesDgv.Location = new System.Drawing.Point(0, 0);
 			this.EmployeesDgv.Name = "EmployeesDgv";
 			this.EmployeesDgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.EmployeesDgv.Size = new System.Drawing.Size(533, 551);
+			this.EmployeesDgv.Size = new System.Drawing.Size(533, 584);
 			this.EmployeesDgv.TabIndex = 0;
 			// 
 			// panel9
@@ -358,7 +329,7 @@
 			this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel9.Location = new System.Drawing.Point(3, 39);
 			this.panel9.Name = "panel9";
-			this.panel9.Size = new System.Drawing.Size(533, 87);
+			this.panel9.Size = new System.Drawing.Size(533, 60);
 			this.panel9.TabIndex = 2;
 			// 
 			// LinkLabelChangeManager
@@ -367,12 +338,12 @@
 			this.LinkLabelChangeManager.AutoSize = true;
 			this.LinkLabelChangeManager.Font = new System.Drawing.Font("Segoe UI", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.LinkLabelChangeManager.LinkColor = System.Drawing.Color.OrangeRed;
-			this.LinkLabelChangeManager.Location = new System.Drawing.Point(410, 27);
+			this.LinkLabelChangeManager.Location = new System.Drawing.Point(385, 27);
 			this.LinkLabelChangeManager.Name = "LinkLabelChangeManager";
-			this.LinkLabelChangeManager.Size = new System.Drawing.Size(114, 17);
-			this.LinkLabelChangeManager.TabIndex = 2;
+			this.LinkLabelChangeManager.Size = new System.Drawing.Size(139, 17);
+			this.LinkLabelChangeManager.TabIndex = 7;
 			this.LinkLabelChangeManager.TabStop = true;
-			this.LinkLabelChangeManager.Text = "Change Manager";
+			this.LinkLabelChangeManager.Text = "Change Manager [M]";
 			this.LinkLabelChangeManager.VisitedLinkColor = System.Drawing.Color.OrangeRed;
 			this.LinkLabelChangeManager.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelChangeManager_LinkClicked);
 			// 
@@ -409,9 +380,9 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
 			this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.groupBox2.Location = new System.Drawing.Point(0, 680);
+			this.groupBox2.Location = new System.Drawing.Point(0, 686);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(539, 181);
+			this.groupBox2.Size = new System.Drawing.Size(539, 175);
 			this.groupBox2.TabIndex = 14;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Contact";
@@ -476,16 +447,27 @@
 			this.label5.TabIndex = 2;
 			this.label5.Text = "Address:";
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.label1.Location = new System.Drawing.Point(0, 0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(315, 45);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "MANAGE CINEMAS";
+			// 
 			// ComboBoxCinemas
 			// 
 			this.ComboBoxCinemas.BackColor = System.Drawing.Color.Gainsboro;
 			this.ComboBoxCinemas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ComboBoxCinemas.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.ComboBoxCinemas.FormattingEnabled = true;
-			this.ComboBoxCinemas.Location = new System.Drawing.Point(308, 12);
+			this.ComboBoxCinemas.Location = new System.Drawing.Point(308, 2);
 			this.ComboBoxCinemas.Name = "ComboBoxCinemas";
 			this.ComboBoxCinemas.Size = new System.Drawing.Size(178, 29);
-			this.ComboBoxCinemas.TabIndex = 3;
+			this.ComboBoxCinemas.TabIndex = 0;
 			this.ComboBoxCinemas.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCinemas_SelectedIndexChanged);
 			// 
 			// LabelCinemaName
@@ -501,18 +483,35 @@
 			this.LabelCinemaName.Text = "Cinema Name";
 			this.LabelCinemaName.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
+			// RefreshButton
+			// 
+			this.RefreshButton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.RefreshButton.Location = new System.Drawing.Point(492, 0);
+			this.RefreshButton.Name = "RefreshButton";
+			this.RefreshButton.Size = new System.Drawing.Size(108, 27);
+			this.RefreshButton.TabIndex = 5;
+			this.RefreshButton.Text = "Refresh [F5]";
+			this.RefreshButton.UseVisualStyleBackColor = true;
+			this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+			// 
 			// CinemaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.White;
 			this.ClientSize = new System.Drawing.Size(1056, 906);
+			this.Controls.Add(this.RefreshButton);
 			this.Controls.Add(this.LabelCinemaName);
 			this.Controls.Add(this.ComboBoxCinemas);
 			this.Controls.Add(this.CinemaSplitContainer);
 			this.Controls.Add(this.label1);
+			this.KeyPreview = true;
 			this.Name = "CinemaForm";
 			this.Text = "Cinema Managment Tab";
+			this.Activated += new System.EventHandler(this.CinemaForm_Enter);
+			this.Load += new System.EventHandler(this.CinemaForm_Load);
+			this.Enter += new System.EventHandler(this.CinemaForm_Enter);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CinemaForm_KeyDown);
 			this.CinemaSplitContainer.Panel1.ResumeLayout(false);
 			this.CinemaSplitContainer.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.CinemaSplitContainer)).EndInit();
@@ -542,9 +541,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.SplitContainer CinemaSplitContainer;
-		private System.Windows.Forms.ComboBox ComboBoxCinemas;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.MonthCalendar ProjectionCalendar;
 		private System.Windows.Forms.DataGridView ProjectionsDataGridView;
@@ -553,7 +550,6 @@
 		private System.Windows.Forms.Button ButtonShowFuturePredictions;
 		private System.Windows.Forms.Button ButtonUpdateProjection;
 		private System.Windows.Forms.Button ButtonAddProjection;
-		private System.Windows.Forms.Label LabelCinemaName;
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.Panel panel3;
 		private System.Windows.Forms.Panel panel6;
@@ -568,7 +564,6 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.LinkLabel LinkLabelManager;
 		private System.Windows.Forms.Panel panel10;
-		private System.Windows.Forms.Panel panel12;
 		private System.Windows.Forms.Panel panel11;
 		private System.Windows.Forms.DataGridView EmployeesDgv;
 		private System.Windows.Forms.LinkLabel LinkLabelChangeManager;
@@ -578,6 +573,10 @@
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ComboBox ComboBoxCinemas;
+		private System.Windows.Forms.Label LabelCinemaName;
+		private System.Windows.Forms.Button RefreshButton;
 
 	}
 }

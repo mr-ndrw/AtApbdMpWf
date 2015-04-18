@@ -66,14 +66,16 @@ namespace AtApbdMpWf.Data
 		{
 			var command = CreateCommand("GetCinemas", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "@IdCinema", id));
 
-			var reader = command.ExecuteReader();
+			Cinema cinema;
 
-			if (!reader.HasRows) return null;
+			using (var reader = command.ExecuteReader())
+			{
+				if (!reader.HasRows) return null;
 
-			reader.Read();
-			var cinema = Cinema.Create(reader);
-
-			reader.Close();
+				reader.Read();
+				cinema = Cinema.Create(reader);
+	
+			}
 			return cinema;
 		}
 
@@ -88,39 +90,60 @@ namespace AtApbdMpWf.Data
 		{
 			var command = CreateCommand("GetCinemas", _sqlConnection, CommandType.StoredProcedure);
 
-			var reader = command.ExecuteReader();
-
-			if (!reader.HasRows) return new List<Cinema>();
-
 			var cinemas = new List<Cinema>();
-		
-			while (reader.Read())
+
+			using (var reader = command.ExecuteReader())
 			{
-				cinemas.Add(Cinema.Create(reader));
+				if (!reader.HasRows) return new List<Cinema>();
+
+				while (reader.Read())
+				{
+					cinemas.Add(Cinema.Create(reader));
+				}	
 			}
 
-			reader.Close();
 			return cinemas;
 		}
 
 		public void CreateCinema(Cinema cinema)
 		{
-			throw new NotImplementedException();
+			ValuedSqlParameter	name = new ValuedSqlParameter(SqlDbType.VarChar, "Name", cinema.Name),
+								address = new ValuedSqlParameter(SqlDbType.VarChar, "Address", cinema.Address),
+								telNo = new ValuedSqlParameter(SqlDbType.VarChar, "TelephoneNo", cinema.TelephoneNo),
+								idRegion = new ValuedSqlParameter(SqlDbType.Int, "IdRegion", cinema.IdRegion),
+								idManager = new ValuedSqlParameter(SqlDbType.Int, "IdManager", cinema.IdManager);
+
+			var parameters = new[] {name, address, telNo, idRegion, idManager};
+
+			var command = CreateCommand("CreateCinema", _sqlConnection, CommandType.StoredProcedure, parameters);
+
+			command.ExecuteNonQuery();
 		}
 
 		public void DeleteCinema(Cinema cinema)
 		{
-			throw new NotImplementedException();
+			DeleteCinema(cinema.Id);
 		}
 
 		public void DeleteCinema(int id)
 		{
-			throw new NotImplementedException();
+			var command = CreateCommand("DeleteCinema", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "IdCInema", id));
+
+			command.ExecuteNonQuery();
 		}
 
 		public void Update(Cinema cinema)
 		{
-			throw new NotImplementedException();
+			ValuedSqlParameter name = new ValuedSqlParameter(SqlDbType.VarChar, "Name", cinema.Name),
+					address = new ValuedSqlParameter(SqlDbType.VarChar, "Address", cinema.Address),
+					telNo = new ValuedSqlParameter(SqlDbType.VarChar, "TelephoneNo", cinema.TelephoneNo),
+					id = new ValuedSqlParameter(SqlDbType.Int, "IdCinema", cinema.Id);
+
+			var parameters = new[] {name, address, telNo, id};
+
+			var command = CreateCommand("UpdateBasicCinemaData", _sqlConnection, CommandType.StoredProcedure, parameters);
+
+			command.ExecuteNonQuery();
 		}
 
 		/// <summary>
@@ -136,14 +159,17 @@ namespace AtApbdMpWf.Data
 		{
 			var command = CreateCommand("GetManagerForCinema", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "@IdCinema", cinema.Id));
 
-			var reader = command.ExecuteReader();
 
-			if (!reader.HasRows) return null;
+			Employee employee;
 
-			reader.Read();
+			using (var reader = command.ExecuteReader())
+			{
+				if (!reader.HasRows) return null;
 
-			var employee = Employee.Create(reader);
-			reader.Close();
+				reader.Read();
+
+				employee = Employee.Create(reader);	
+			}
 
 			return employee;
 		}
@@ -173,18 +199,17 @@ namespace AtApbdMpWf.Data
 		{
 			var command = CreateCommand("GetAllEmployeesForCinema", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "@IdCinema", cinema.Id));
 
-			var reader = command.ExecuteReader();
-
 			var employees = new List<Employee>();
-			if (!reader.HasRows) return employees;
 
-			
-			while (reader.Read())
+			using (var reader = command.ExecuteReader())
 			{
-				employees.Add(Employee.Create(reader));
+				if (!reader.HasRows) return employees;
+				while (reader.Read())
+				{
+					employees.Add(Employee.Create(reader));
+				}	
 			}
 
-			reader.Close();
 			return employees;
 		}
 
@@ -260,14 +285,17 @@ namespace AtApbdMpWf.Data
 		{
 			var command = CreateCommand("GetRegion", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "@IdRegion", id));
 
-			var reader = command.ExecuteReader();
+			Region region;
 
-			if (!reader.HasRows) return null;
+			using (var reader = command.ExecuteReader())
+			{
+				if (!reader.HasRows) return null;
 
-			reader.Read();
+				reader.Read();
 
-			var region = Region.Create(reader);
-			reader.Close();
+				region = Region.Create(reader);	
+			}
+			
 			return region;
 		}
 
@@ -354,6 +382,198 @@ namespace AtApbdMpWf.Data
 			}
 
 			return projection;
+		}
+
+		public IEnumerable<Employee> GetEmployeesByRegion(int IdRegion)
+		{
+			var command = CreateCommand("GetEmployeesByRegion", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "IdRegion", IdRegion));
+
+			var employees = new List<Employee>();
+
+			using (var reader = command.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					employees.Add(Employee.Create(reader));
+				}
+			}
+
+			return employees;
+		}
+
+		public IEnumerable<Employee> GetEmployeesByRegion(Region region)
+		{
+			return GetEmployeesByRegion(region.Id);
+		}
+
+		public IEnumerable<Cinema> GetCinemasByRegion(int IdRegion)
+		{
+			var command = CreateCommand("GetCinemasByRegion", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "IdRegion", IdRegion));
+
+			var cinemas = new List<Cinema>();
+
+			using (var reader = command.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					cinemas.Add(Cinema.Create(reader));
+				}
+			}
+
+			return cinemas;
+		}
+
+		public IEnumerable<Cinema> GetCinemasByRegion(Region region)
+		{
+			return GetCinemasByRegion(region.Id);
+		}
+
+		public IEnumerable<Region> GetRegions()
+		{
+			var command = CreateCommand("GetRegions", _sqlConnection, CommandType.StoredProcedure);
+
+			var regions = new List<Region>();
+
+			using (var reader = command.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					regions.Add(Region.Create(reader));
+				}
+			}
+
+			return regions;
+		}
+
+		public IEnumerable<Employee> GetEmployees()
+		{
+			var command = CreateCommand("GetEmployees", _sqlConnection, CommandType.StoredProcedure);
+
+			var employees = new List<Employee>();
+
+			using (var reader = command.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					employees.Add(Employee.Create(reader));
+				}
+			}
+
+			return employees;
+
+		}
+
+		public IEnumerable<Employee> GetEmployeesWithNoCinemaAttachment()
+		{
+			var command = CreateCommand("GetEmployeesWithNoCinemaAttachement", _sqlConnection, CommandType.StoredProcedure);
+
+			var employees = new List<Employee>();
+
+			using (var reader = command.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					employees.Add(Employee.Create(reader));
+				}
+			}
+
+			return employees;
+		}
+
+		public void AddEmployeeToCinema(int idCinema, Employee employee)
+		{
+			ValuedSqlParameter name = new ValuedSqlParameter(SqlDbType.VarChar, "Name", employee.Name),
+				surname = new ValuedSqlParameter(SqlDbType.VarChar, "Surname", employee.Surname),
+				telephone = new ValuedSqlParameter(SqlDbType.VarChar, "TelephoneNo", employee.TelephoneNo),
+				email = new ValuedSqlParameter(SqlDbType.VarChar, "Email", employee.Email),
+				idCinemaParam = new ValuedSqlParameter(SqlDbType.Int, "IdCinema", idCinema);
+
+			var parameters = new[] {name, surname, telephone, email, idCinemaParam};
+
+			var command = CreateCommand("AddEmployeeToCinema", _sqlConnection, CommandType.StoredProcedure, parameters);
+
+			command.ExecuteNonQuery();
+		}
+
+		public void AddExsitingEmployeeToCinema(int idCinema, int idEmloyee)
+		{
+			var parameterers = new[] {new ValuedSqlParameter(SqlDbType.Int, "IdCinema", idCinema), new ValuedSqlParameter(SqlDbType.Int, "IdEmployee", idEmloyee)};
+
+			var command = CreateCommand("AddExistingEmployeeToCinema", _sqlConnection, CommandType.StoredProcedure, parameterers);
+
+			command.ExecuteNonQuery();
+		}
+
+		public Employee GetEmployee(int idEmployee)
+		{
+			var command = CreateCommand("GetEmployee", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "IdEmployee", idEmployee));
+
+			Employee employee;
+
+			using (var reader = command.ExecuteReader())
+			{
+				if (!reader.HasRows) return null;
+
+				reader.Read();
+
+				employee = Employee.Create(reader);	
+			}
+			
+			return employee;			
+		}
+
+		public void UpdateEmployee(Employee employee)
+		{
+			var parameters = new[]
+			{
+				new ValuedSqlParameter(SqlDbType.Int, "IdEmployee", employee.Id),
+				new ValuedSqlParameter(SqlDbType.VarChar, "Name", employee.Name),
+				new ValuedSqlParameter(SqlDbType.VarChar, "Surname", employee.Surname),
+				new ValuedSqlParameter(SqlDbType.VarChar, "TelephoneNo", employee.TelephoneNo),
+				new ValuedSqlParameter(SqlDbType.VarChar, "Email", employee.Email)
+			};
+
+			var command = CreateCommand("UpdateEmployee", _sqlConnection, CommandType.StoredProcedure, parameters);
+
+			command.ExecuteNonQuery();
+		}
+
+		public void DeleteEmployee(int idEmployee)
+		{
+			var command = CreateCommand("DeleteEmployee", _sqlConnection, CommandType.StoredProcedure, new ValuedSqlParameter(SqlDbType.Int, "IdEmployee", idEmployee));
+
+			command.ExecuteNonQuery();
+		}
+
+		public void EditRegion(Region region)
+		{
+			var command = CreateCommand("EditRegion", _sqlConnection, CommandType.StoredProcedure, new[] {new ValuedSqlParameter(SqlDbType.Int, "IdRegion", region.Id), new ValuedSqlParameter(SqlDbType.VarChar, "Name", region.Name)});
+
+			command.ExecuteNonQuery();
+		}
+
+		public void DeleteRegion(Region region)
+		{
+			DeleteRegion(region.Id);
+		}
+
+		public void DeleteRegion(int idRegion)
+		{
+			var command = CreateCommand("DeleteRegion", _sqlConnection, CommandType.StoredProcedure, new[] { new ValuedSqlParameter(SqlDbType.Int, "IdRegion", idRegion) });
+
+			command.ExecuteNonQuery();
+		}
+
+		public void AddRegion(Region region)
+		{
+			AddRegion(region.Name);
+		}
+
+		public void AddRegion(string regionName)
+		{
+			var command = CreateCommand("AddRegion", _sqlConnection, CommandType.StoredProcedure, new[] { new ValuedSqlParameter(SqlDbType.VarChar, "Name", regionName) });
+
+			command.ExecuteNonQuery();
 		}
 	}
 }
